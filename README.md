@@ -31,5 +31,6 @@ Open in browser the visualization website
 ```
 Upload the json file created above in the website to visualize.
 
+![Visualization](images/decision_tree_visual.png)
 Enjoy the visualization !!! 
 
