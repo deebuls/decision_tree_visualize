@@ -32,14 +32,19 @@ path.link {
     </style>
   </head>
   <body>
+
+
     <div id="body">
       <div id="footer">
-        Decision Tree viewer
-        <div class="hint">click to expand or collapse</div>
-        <div id="menu">
-          <select id="datasets"></select>
-        </div>
+          <h1>Decision Tree viewer</h1>
+        <form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
 
+        <fieldset>
+            <h2>Json File</h2>
+            <input type='file' id='fileinput'>
+            <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
+        </fieldset>
+        </form>
       </div>
     </div>
     <script type="text/javascript">
@@ -314,6 +319,40 @@ function mean_interpolation(root) {
   return interpolator;
 }
 
+/*
+* Function to load json file from file system
+**/
+function loadFile() {
+    var input, file, fr;
+
+    if (typeof window.FileReader !== 'function') {
+      alert("The file API isn't supported on this browser yet.");
+      return;
+    }
+
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = receivedText;
+      fr.readAsText(file);
+    }
+
+    function receivedText(e) {
+      lines = e.target.result;
+      var newArr = JSON.parse(lines); 
+        load_dataset(newArr);
+    }
+  }
     </script>
   </body>
 </html>
